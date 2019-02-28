@@ -49,26 +49,8 @@ public class DataManager
         }
     }
 
-    public void getSearchResult(String title)
+    public Retrofit getRetrofit()
     {
-
-        ShowApi showApi = retrofit.create(ShowApi.class);
-        Call<ShowResponse> call = showApi.getSearchResults(title, 1, Constants.API_KEY);
-        call.enqueue(new Callback<ShowResponse>()
-        {
-            @Override
-            public void onResponse(Call<ShowResponse> call, Response<ShowResponse> response)
-            {
-                List<ShowDetails> list = response.body().getShowDetailsList();
-                Log.i(TAG, "list size is " + list.size());
-            }
-
-            @Override
-            public void onFailure(Call<ShowResponse> call, Throwable t)
-            {
-                Log.e(TAG, t.toString());
-            }
-        });
+        return retrofit;
     }
-
 }

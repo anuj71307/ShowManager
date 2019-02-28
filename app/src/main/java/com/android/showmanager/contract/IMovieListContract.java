@@ -9,6 +9,7 @@ public interface IMovieListContract
     interface IMovieListPresenter {
 
         void searchByTitle(String title);
+        void onDestroy();
     }
 
     interface IMovieListView {
@@ -17,5 +18,22 @@ public interface IMovieListContract
        void hideProgress();
        void loadSearchResult(List<ShowDetails> showDetailsList);
        void showEmptyErrorTitle();
+       void showResponseFailure();
+    }
+
+    /**
+     * Intractors are classes built for fetching data from omdb
+     **/
+    interface IGetSearchResultIntractor
+    {
+
+        interface OnFinishedListener
+        {
+            void onFinished(List<ShowDetails> showList);
+
+            void onFailure();
+        }
+
+        void getSearchResult(String title, OnFinishedListener onFinishedListener);
     }
 }
