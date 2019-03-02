@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.android.showmanager.R;
 import com.android.showmanager.pojo.ShowSearchDetails;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import android.content.Context;
@@ -45,18 +46,31 @@ public class ShowListAdapter extends RecyclerView.Adapter<ShowListViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ShowListViewHolder holder, final int position)
+    public void onBindViewHolder(@NonNull final ShowListViewHolder holder, final int position)
     {
         final ShowSearchDetails showDetails = showDetailsList.get(position);
         holder.showYearView.setText(showDetails.getYear());
         holder.showNameView.setText(showDetails.getTitle());
+        //TODO Anuj scroll progress bar
         Picasso.with(context)
             .load(showDetails.getPoster())
             .placeholder(R.drawable.placeholder_background)
             .error(R.drawable.placeholder_background)
             .fit()
             .noFade()
-            .into(holder.imageView);
+            .into(holder.imageView, new Callback()
+            {
+                @Override
+                public void onSuccess()
+                {
+
+                }
+
+                @Override
+                public void onError()
+                {
+                }
+            });
 
         holder.itemView.setOnClickListener(new View.OnClickListener()
         {

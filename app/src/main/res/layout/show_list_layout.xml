@@ -1,49 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="@dimen/image_width"
-        android:layout_height="@dimen/image_height"
-        android:background="@drawable/placeholder_background" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_margin_half"
+        app:cardBackgroundColor="@color/placeholder_grey"
+        app:cardCornerRadius="3dp"
+        app:cardPreventCornerOverlap="false">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/poster_thumb_width"
+            android:layout_height="@dimen/poster_thumb_height"/>
+
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
-        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="@dimen/activity_margin"
+        android:background="@android:color/white"
         android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/imageView"
-        android:layout_marginLeft="@dimen/margin_left"
-        android:layout_marginTop="@dimen/margin_top">
-    <TextView
-        android:id="@+id/showName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size"
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:textColor="@color/colorBlack"
-        android:text="TextView" />
+        android:layout_toRightOf="@+id/cardView"
+        android:paddingBottom="@dimen/activity_margin"
+        android:paddingEnd="@dimen/activity_margin"
+        android:paddingLeft="@dimen/poster_thumb_width"
+        android:paddingRight="@dimen/activity_margin"
+        android:paddingStart="@dimen/poster_thumb_width"
+        android:paddingTop="@dimen/activity_margin_half">
 
-    <TextView
-        android:id="@+id/showYear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorBlack"
-        android:textSize="@dimen/text_size"
-        android:text="TextView" />
+        <TextView
+            android:id="@+id/showYear"
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left_small"
+            android:layout_marginStart="@dimen/margin_left_small"
+            android:alpha="0.38"
+            android:gravity="end"
+            android:maxLines="1"
+            android:textStyle="bold"
+            tools:text="2019 | EN"/>
+
+        <TextView
+            android:id="@+id/showName"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left_small"
+            android:layout_marginStart="@dimen/margin_left_small"
+            android:maxLines="2"
+            android:ellipsize="end"
+            tools:text="Movie Title"/>
+
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/bookmark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/bookmark" />
 </RelativeLayout>

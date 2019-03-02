@@ -1,5 +1,6 @@
 package com.android.showmanager.rest;
 
+import com.android.showmanager.pojo.ShowDetails;
 import com.android.showmanager.pojo.ShowSearchResponse;
 
 import retrofit2.Call;
@@ -10,4 +11,6 @@ public interface ShowApi
 {
     @GET("?")
     Call<ShowSearchResponse> getSearchResults(@Query("s") String title, @Query("page") int pages, @Query("apikey") String apikey);
+    @GET("?")
+    Call<ShowDetails> getShowDetails(@Query("i") String imdbId, @Query("apikey") String apiKey);
 }

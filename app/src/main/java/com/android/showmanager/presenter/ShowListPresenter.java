@@ -1,24 +1,27 @@
 package com.android.showmanager.presenter;
 
-import com.android.showmanager.contract.IMovieListContract;
+import com.android.showmanager.MyApplication;
+import com.android.showmanager.contract.IShowSearchContract;
 import com.android.showmanager.contract.OnFinishedListener;
+import com.android.showmanager.pojo.ShowSearchDetails;
 import com.android.showmanager.pojo.ShowSearchResponse;
+import com.android.showmanager.room.BookmarkRepository;
 
 import android.text.TextUtils;
 
 /**
  * Presenter class responsible to interact with view
  */
-public class MovieListPresenter<T> implements IMovieListContract.IMovieListPresenter, OnFinishedListener<T>
+public class ShowListPresenter<T> implements IShowSearchContract.ShowSearchPresenter, OnFinishedListener<T>
 {
-    private IMovieListContract.IMovieListView view;
-    private IMovieListContract.IGetSearchResultIntractor iGetSearchResultIntractor;
+    private IShowSearchContract.IShowSearchView view;
+    private IShowSearchContract.IGetShowResultIntractor iGetShowResultIntractor;
 
-    public MovieListPresenter(IMovieListContract.IMovieListView view,
-        IMovieListContract.IGetSearchResultIntractor iGetSearchResultIntractor)
+    public ShowListPresenter(IShowSearchContract.IShowSearchView view,
+        IShowSearchContract.IGetShowResultIntractor iGetShowResultIntractor)
     {
         this.view = view;
-        this.iGetSearchResultIntractor = iGetSearchResultIntractor;
+        this.iGetShowResultIntractor = iGetShowResultIntractor;
     }
 
     @Override
@@ -33,7 +36,7 @@ public class MovieListPresenter<T> implements IMovieListContract.IMovieListPrese
         }
         else {
             view.showProgress();
-            iGetSearchResultIntractor.getSearchResult(title, this);
+            iGetShowResultIntractor.getSearchResult(title, this);
         }
     }
 
@@ -44,6 +47,16 @@ public class MovieListPresenter<T> implements IMovieListContract.IMovieListPrese
     public void onDestroy()
     {
         view = null;
+    }
+
+    @Override
+    public void saveBookMark(ShowSearchDetails showDetails)
+    {
+        //save bookmark in db
+        BookmarkRepository repository = MyApplication.getMyApplicationContext().getBookMarkRepository();
+        repository.insertBookMark(showDetails.getImdbID(), showDetails.getTitle(), showDetails.getYear(),
+            showDetails.getPoster());
+
     }
 
     @Override

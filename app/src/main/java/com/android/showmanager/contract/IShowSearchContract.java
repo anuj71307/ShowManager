@@ -4,16 +4,17 @@ import java.util.List;
 
 import com.android.showmanager.pojo.ShowSearchDetails;
 
-public interface IMovieListContract
+public interface IShowSearchContract
 {
-    interface IMovieListPresenter {
-
+    interface ShowSearchPresenter
+    {
         void searchByTitle(String title);
         void onDestroy();
+        void saveBookMark(ShowSearchDetails showDetails);
     }
 
-    interface IMovieListView {
-
+    interface IShowSearchView
+    {
        void showProgress();
        void hideProgress();
        void loadSearchResult(List<ShowSearchDetails> showDetailsList);
@@ -24,9 +25,10 @@ public interface IMovieListContract
     /**
      * Intractors are classes built for fetching data from omdb
      **/
-    interface IGetSearchResultIntractor
+    interface IGetShowResultIntractor
     {
 
         void getSearchResult(String title, OnFinishedListener onFinishedListener);
+        void getShowDetails(String imdbId, OnFinishedListener onFinishedListener);
     }
 }

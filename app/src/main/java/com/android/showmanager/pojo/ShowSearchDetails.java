@@ -15,15 +15,18 @@ public class ShowSearchDetails
     private String type;
     @SerializedName("Poster")
     private String poster;
+    @SerializedName("totalResults")
+    private String totalResults;
 
 
-    public ShowSearchDetails(String title, String year, String imdbID, String type, String poster)
+    public ShowSearchDetails(String title, String year, String imdbID, String type, String poster, String totalResults)
     {
         this.title = title;
         this.year = year;
         this.imdbID = imdbID;
         this.type = type;
         this.poster = poster;
+        this.totalResults = totalResults;
     }
 
     public String getTitle()
@@ -74,5 +77,15 @@ public class ShowSearchDetails
     public void setPoster(String poster)
     {
         this.poster = poster;
+    }
+
+    public String getTotalResults()
+    {
+        return totalResults;
+    }
+
+    public void setTotalResults(String totalResults)
+    {
+        this.totalResults = totalResults;
     }
 }

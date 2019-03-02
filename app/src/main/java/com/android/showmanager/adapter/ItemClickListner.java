@@ -4,5 +4,6 @@ import com.android.showmanager.pojo.ShowSearchDetails;
 
 public interface ItemClickListner
 {
-    void onItemClick(ShowSearchDetails showSearchDetails);
+    void onItemClick(ShowSearchDetails showDetails);
+    void onSaveBookMark(ShowSearchDetails showDetails);
 }
