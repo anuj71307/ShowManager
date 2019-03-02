@@ -1,10 +1,8 @@
 package com.android.showmanager.rest;
 
-import java.util.List;
-
 import com.android.showmanager.contract.IMovieListContract;
-import com.android.showmanager.pojo.ShowDetails;
-import com.android.showmanager.pojo.ShowResponse;
+import com.android.showmanager.contract.OnFinishedListener;
+import com.android.showmanager.pojo.ShowSearchResponse;
 import com.android.showmanager.utils.Constants;
 
 import android.util.Log;
@@ -20,19 +18,19 @@ public class GetSearchResultIntractor implements IMovieListContract.IGetSearchRe
     @Override
     public void getSearchResult(String title, final OnFinishedListener onFinishedListener)
     {
-        ShowApi showApi = DataManager.getInstance().getRetrofit().create(ShowApi.class);
-        Call<ShowResponse> call = showApi.getSearchResults(title, 1, Constants.API_KEY);
-        call.enqueue(new Callback<ShowResponse>()
+        //todo add internet check
+        ShowApi showApi = DataRequestHandler.getRetroFitInstance().create(ShowApi.class);
+        Call<ShowSearchResponse> call = showApi.getSearchResults(title, 1, Constants.API_KEY);
+        call.enqueue(new Callback<ShowSearchResponse>()
         {
             @Override
-            public void onResponse(Call<ShowResponse> call, Response<ShowResponse> response)
+            public void onResponse(Call<ShowSearchResponse> call, Response<ShowSearchResponse> response)
             {
-                List<ShowDetails> list = response.body().getShowDetailsList();
-                onFinishedListener.onFinished(list);
+                onFinishedListener.onFinished(response.body());
             }
 
             @Override
-            public void onFailure(Call<ShowResponse> call, Throwable t)
+            public void onFailure(Call<ShowSearchResponse> call, Throwable t)
 
             {
                 Log.e(TAG, t.toString());

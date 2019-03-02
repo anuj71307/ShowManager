@@ -45,5 +45,5 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:layout_alignParentRight="true"
-        app:srcCompat="@drawable/outline_bookmarks_black_48" />
+        android:background="@drawable/bookmark" />
 </RelativeLayout>

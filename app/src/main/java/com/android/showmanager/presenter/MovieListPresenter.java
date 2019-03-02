@@ -1,17 +1,15 @@
 package com.android.showmanager.presenter;
 
-import java.util.List;
-
 import com.android.showmanager.contract.IMovieListContract;
-import com.android.showmanager.pojo.ShowDetails;
+import com.android.showmanager.contract.OnFinishedListener;
+import com.android.showmanager.pojo.ShowSearchResponse;
 
 import android.text.TextUtils;
 
 /**
  * Presenter class responsible to interact with view
  */
-public class MovieListPresenter implements IMovieListContract.IMovieListPresenter,
-    IMovieListContract.IGetSearchResultIntractor.OnFinishedListener
+public class MovieListPresenter<T> implements IMovieListContract.IMovieListPresenter, OnFinishedListener<T>
 {
     private IMovieListContract.IMovieListView view;
     private IMovieListContract.IGetSearchResultIntractor iGetSearchResultIntractor;
@@ -48,18 +46,14 @@ public class MovieListPresenter implements IMovieListContract.IMovieListPresente
         view = null;
     }
 
-    /**
-     * network call executed successfully
-     * @param showList
-     */
     @Override
-    public void onFinished(List<ShowDetails> showList)
+    public void onFinished(T object)
     {
-        if (view == null) {
-            return;
-        }
-        view.loadSearchResult(showList);
+        if(view==null || !(object instanceof ShowSearchResponse)) return;;
         view.hideProgress();
+        ShowSearchResponse response = (ShowSearchResponse) object;
+        view.loadSearchResult(response.getShowDetailsList());
+
     }
 
     /**
@@ -73,5 +67,11 @@ public class MovieListPresenter implements IMovieListContract.IMovieListPresente
         }
         view.showResponseFailure();
         view.hideProgress();
+    }
+
+    @Override
+    public void onInternetNotConnected()
+    {
+
     }
 }

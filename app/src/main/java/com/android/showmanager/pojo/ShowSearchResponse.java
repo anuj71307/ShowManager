@@ -4,25 +4,25 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ShowResponse
+public class ShowSearchResponse
 {
     @SerializedName("Search")
-    List<ShowDetails> showDetailsList;
+    List<ShowSearchDetails> showDetailsList;
     @SerializedName("totalResults")
     String totalResult;
 
-    public ShowResponse(List<ShowDetails> showDetailsList, String totalResult)
+    public ShowSearchResponse(List<ShowSearchDetails> showDetailsList, String totalResult)
     {
         this.showDetailsList = showDetailsList;
         this.totalResult = totalResult;
     }
 
-    public List<ShowDetails> getShowDetailsList()
+    public List<ShowSearchDetails> getShowDetailsList()
     {
         return showDetailsList;
     }
 
-    public void setShowDetailsList(List<ShowDetails> showDetailsList)
+    public void setShowDetailsList(List<ShowSearchDetails> showDetailsList)
     {
         this.showDetailsList = showDetailsList;
     }

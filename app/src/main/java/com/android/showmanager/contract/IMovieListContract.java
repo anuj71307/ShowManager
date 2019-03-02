@@ -2,7 +2,7 @@ package com.android.showmanager.contract;
 
 import java.util.List;
 
-import com.android.showmanager.pojo.ShowDetails;
+import com.android.showmanager.pojo.ShowSearchDetails;
 
 public interface IMovieListContract
 {
@@ -16,7 +16,7 @@ public interface IMovieListContract
 
        void showProgress();
        void hideProgress();
-       void loadSearchResult(List<ShowDetails> showDetailsList);
+       void loadSearchResult(List<ShowSearchDetails> showDetailsList);
        void showEmptyErrorTitle();
        void showResponseFailure();
     }
@@ -26,13 +26,6 @@ public interface IMovieListContract
      **/
     interface IGetSearchResultIntractor
     {
-
-        interface OnFinishedListener
-        {
-            void onFinished(List<ShowDetails> showList);
-
-            void onFailure();
-        }
 
         void getSearchResult(String title, OnFinishedListener onFinishedListener);
     }

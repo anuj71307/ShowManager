@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.android.showmanager.R;
-import com.android.showmanager.pojo.ShowDetails;
-import com.android.showmanager.utils.Constants;
+import com.android.showmanager.pojo.ShowSearchDetails;
 import com.squareup.picasso.Picasso;
 
 import android.content.Context;
@@ -19,18 +18,18 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ShowListAdapter extends RecyclerView.Adapter<ShowListViewHolder>
 {
 
-    List<ShowDetails> showDetailsList;
+    List<ShowSearchDetails> showDetailsList;
     ItemClickListner listner;
     private Context context;
 
-    public ShowListAdapter(Context context, ArrayList<ShowDetails> showDetailsList, ItemClickListner listner)
+    public ShowListAdapter(Context context, ArrayList<ShowSearchDetails> showDetailsList, ItemClickListner listner)
     {
         this.showDetailsList = showDetailsList;
         this.listner = listner;
         this.context = context;
     }
 
-    public void setShowDetailsList(List<ShowDetails> showDetailsList)
+    public void setShowDetailsList(List<ShowSearchDetails> showDetailsList)
     {
         this.showDetailsList = showDetailsList;
     }
@@ -48,7 +47,7 @@ public class ShowListAdapter extends RecyclerView.Adapter<ShowListViewHolder>
     @Override
     public void onBindViewHolder(@NonNull ShowListViewHolder holder, final int position)
     {
-        ShowDetails showDetails = showDetailsList.get(position);
+        final ShowSearchDetails showDetails = showDetailsList.get(position);
         holder.showYearView.setText(showDetails.getYear());
         holder.showNameView.setText(showDetails.getTitle());
         Picasso.with(context)
@@ -58,6 +57,15 @@ public class ShowListAdapter extends RecyclerView.Adapter<ShowListViewHolder>
             .fit()
             .noFade()
             .into(holder.imageView);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                listner.onItemClick(showDetails);
+            }
+        });
     }
 
     @Override

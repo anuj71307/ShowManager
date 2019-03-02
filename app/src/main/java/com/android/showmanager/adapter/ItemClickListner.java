@@ -1,8 +1,8 @@
 package com.android.showmanager.adapter;
 
-import com.android.showmanager.pojo.ShowDetails;
+import com.android.showmanager.pojo.ShowSearchDetails;
 
 public interface ItemClickListner
 {
-    void onItemClick(ShowDetails showDetails);
+    void onItemClick(ShowSearchDetails showDetails);
 }

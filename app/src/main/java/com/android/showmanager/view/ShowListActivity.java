@@ -5,7 +5,7 @@ import java.util.List;
 import com.android.showmanager.R;
 import com.android.showmanager.adapter.ItemClickListner;
 import com.android.showmanager.adapter.ShowListAdapter;
-import com.android.showmanager.pojo.ShowDetails;
+import com.android.showmanager.pojo.ShowSearchDetails;
 import com.android.showmanager.contract.IMovieListContract;
 import com.android.showmanager.presenter.MovieListPresenter;
 import com.android.showmanager.rest.GetSearchResultIntractor;
@@ -107,7 +107,7 @@ public class ShowListActivity extends AppCompatActivity implements IMovieListCon
     }
 
     @Override
-    public void loadSearchResult(List<ShowDetails> showDetailsList)
+    public void loadSearchResult(List<ShowSearchDetails> showDetailsList)
     {
         Log.i(TAG, "load search result");
         mAdapter.setShowDetailsList(showDetailsList);
@@ -141,7 +141,7 @@ public class ShowListActivity extends AppCompatActivity implements IMovieListCon
     private ItemClickListner recyclerItemClickListener = new ItemClickListner()
     {
         @Override
-        public void onItemClick(ShowDetails showDetails)
+        public void onItemClick(ShowSearchDetails showDetails)
         {
 
             Log.i(TAG, "Show clicked " + showDetails.getTitle());
