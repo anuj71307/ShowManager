@@ -141,10 +141,10 @@ public class ShowListActivity extends AppCompatActivity implements IMovieListCon
     private ItemClickListner recyclerItemClickListener = new ItemClickListner()
     {
         @Override
-        public void onItemClick(ShowSearchDetails showDetails)
+        public void onItemClick(ShowSearchDetails showSearchDetails)
         {
 
-            Log.i(TAG, "Show clicked " + showDetails.getTitle());
+            Log.i(TAG, "Show clicked " + showSearchDetails.getTitle());
 
         }
     };

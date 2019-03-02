@@ -2,7 +2,7 @@ package com.android.showmanager.pojo;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ShowDetails
+public class ShowSearchDetails
 {
 
     @SerializedName("Title")
@@ -17,7 +17,7 @@ public class ShowDetails
     private String poster;
 
 
-    public ShowDetails(String title, String year, String imdbID, String type, String poster)
+    public ShowSearchDetails(String title, String year, String imdbID, String type, String poster)
     {
         this.title = title;
         this.year = year;
