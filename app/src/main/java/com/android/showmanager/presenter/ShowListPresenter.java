@@ -5,7 +5,7 @@ import com.android.showmanager.contract.IShowSearchContract;
 import com.android.showmanager.contract.OnFinishedListener;
 import com.android.showmanager.pojo.ShowSearchDetails;
 import com.android.showmanager.pojo.ShowSearchResponse;
-import com.android.showmanager.room.BookmarkRepository;
+import com.android.showmanager.dao.BookmarkRepository;
 
 import android.text.TextUtils;
 
@@ -25,7 +25,7 @@ public class ShowListPresenter<T> implements IShowSearchContract.ShowSearchPrese
     }
 
     @Override
-    public void searchByTitle(String title)
+    public void searchByTitle(String title, int page)
     {
 
         if (view == null) {
@@ -36,7 +36,7 @@ public class ShowListPresenter<T> implements IShowSearchContract.ShowSearchPrese
         }
         else {
             view.showProgress();
-            iGetShowResultIntractor.getSearchResult(title, this);
+            iGetShowResultIntractor.getSearchResult(title, page, this);
         }
     }
 
@@ -54,9 +54,14 @@ public class ShowListPresenter<T> implements IShowSearchContract.ShowSearchPrese
     {
         //save bookmark in db
         BookmarkRepository repository = MyApplication.getMyApplicationContext().getBookMarkRepository();
-        repository.insertBookMark(showDetails.getImdbID(), showDetails.getTitle(), showDetails.getYear(),
-            showDetails.getPoster());
+        repository.insertBookMark(showDetails);
 
+    }
+
+    @Override
+    public void loadBookMark()
+    {
+      //TODO Load Bookmark
     }
 
     @Override

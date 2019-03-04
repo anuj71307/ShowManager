@@ -17,11 +17,11 @@ public class GetShowResultIntractor implements IShowSearchContract.IGetShowResul
     private static final String TAG = GetShowResultIntractor.class.getSimpleName();
 
     @Override
-    public void getSearchResult(String title, final OnFinishedListener onFinishedListener)
+    public void getSearchResult(String title, int page, final OnFinishedListener onFinishedListener)
     {
         //todo add internet check
         ShowApi showApi = DataRequestHandler.getRetroFitInstance().create(ShowApi.class);
-        Call<ShowSearchResponse> call = showApi.getSearchResults(title, 1, Constants.API_KEY);
+        Call<ShowSearchResponse> call = showApi.getSearchResults(title, page, Constants.API_KEY);
         call.enqueue(new Callback<ShowSearchResponse>()
         {
             @Override

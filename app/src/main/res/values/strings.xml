@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">ShowManager</string>
     <string name="search">Search</string>
+    <string name="error_msg_unknown">An unexpected error occured</string>
+    <string name="tap_to_reload">Tap to reload</string>
+    <string name="dummyName">Movie Name</string>
+    <string name="bookmark">Bookmarks</string>
 </resources>

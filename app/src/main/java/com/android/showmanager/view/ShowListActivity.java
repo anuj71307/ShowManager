@@ -30,7 +30,7 @@ public class ShowListActivity extends AppCompatActivity implements ShowListFragm
     private void initSearchFragment()
     {
         ShowListFragment fragment = new ShowListFragment();
-        doFragmentTransaction(fragment);
+        doFragmentTransaction(fragment, true);
     }
 
     @Override
@@ -56,13 +56,18 @@ public class ShowListActivity extends AppCompatActivity implements ShowListFragm
         Bundle args = new Bundle();
         args.putString(Constants.IMDB_ID, id);
         fragment.setArguments(args);
-        doFragmentTransaction(fragment);
+        doFragmentTransaction(fragment, false);
     }
 
-    private void doFragmentTransaction(Fragment fragment){
+    private void doFragmentTransaction(Fragment fragment, boolean add){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        if(add){
+            fragmentTransaction.add(R.id.frameLayout, fragment);
+        }
+        else {
+            fragmentTransaction.replace(R.id.frameLayout, fragment);
+        }
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

@@ -8,9 +8,11 @@ public interface IShowSearchContract
 {
     interface ShowSearchPresenter
     {
-        void searchByTitle(String title);
+        void searchByTitle(String title, int page);
         void onDestroy();
         void saveBookMark(ShowSearchDetails showDetails);
+
+        void loadBookMark();
     }
 
     interface IShowSearchView
@@ -28,7 +30,7 @@ public interface IShowSearchContract
     interface IGetShowResultIntractor
     {
 
-        void getSearchResult(String title, OnFinishedListener onFinishedListener);
+        void getSearchResult(String title, int page, OnFinishedListener onFinishedListener);
         void getShowDetails(String imdbId, OnFinishedListener onFinishedListener);
     }
 }

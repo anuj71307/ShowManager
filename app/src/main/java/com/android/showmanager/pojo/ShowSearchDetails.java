@@ -2,9 +2,17 @@ package com.android.showmanager.pojo;
 
 import com.google.gson.annotations.SerializedName;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "bookmarkData", indices = {@Index(value = "imdbID", unique = true)})
 public class ShowSearchDetails
 {
 
+    @PrimaryKey(autoGenerate = true)
+    private int _id;
     @SerializedName("Title")
     private String title;
     @SerializedName("Year")
@@ -18,6 +26,10 @@ public class ShowSearchDetails
     @SerializedName("totalResults")
     private String totalResults;
 
+    @Ignore
+    public ShowSearchDetails()
+    {
+    }
 
     public ShowSearchDetails(String title, String year, String imdbID, String type, String poster, String totalResults)
     {
@@ -87,5 +99,15 @@ public class ShowSearchDetails
     public void setTotalResults(String totalResults)
     {
         this.totalResults = totalResults;
+    }
+
+    public int get_id()
+    {
+        return _id;
+    }
+
+    public void set_id(int _id)
+    {
+        this._id = _id;
     }
 }

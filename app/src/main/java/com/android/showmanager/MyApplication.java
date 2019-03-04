@@ -1,6 +1,6 @@
 package com.android.showmanager;
 
-import com.android.showmanager.room.BookmarkRepository;
+import com.android.showmanager.dao.BookmarkRepository;
 
 import android.app.Application;
 import android.content.Context;
