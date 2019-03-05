@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_left_small"
         android:ems="10"
+        android:autofillHints="@string/search_show"
         android:inputType="textNoSuggestions" />
 
 
@@ -48,7 +49,6 @@
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:reverseLayout="true" />
-        />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
