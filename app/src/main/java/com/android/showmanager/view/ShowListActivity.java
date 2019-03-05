@@ -188,6 +188,10 @@ public class ShowListActivity extends AppCompatActivity implements IShowSearchCo
     @Override
     public void loadSearchResult(List<ShowSearchDetails> showDetailsList)
     {
+        if(showDetailsList==null || showDetailsList.isEmpty()){
+            showToastMessage("No more records found");
+            return;
+        }
         Log.i(TAG, "load search result, searchKeyChanged ? " + searchKeyChanged);
         isLoading = false;
         if (searchKeyChanged) {
