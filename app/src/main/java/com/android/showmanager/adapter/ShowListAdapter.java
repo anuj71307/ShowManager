@@ -26,10 +26,10 @@ public class ShowListAdapter extends RecyclerView.Adapter<ShowListAdapter.ShowLi
     private static final String TAG = ShowListAdapter.class.getSimpleName();
     // View Types
     List<ShowSearchDetails> showDetailsList;
-    ItemClickListner listner;
+    IShowClickListner listner;
     private Context context;
 
-    public ShowListAdapter(Context context, ItemClickListner listner)
+    public ShowListAdapter(Context context, IShowClickListner listner)
     {
         this.showDetailsList = new ArrayList<>();
         this.listner = listner;
@@ -94,7 +94,7 @@ public class ShowListAdapter extends RecyclerView.Adapter<ShowListAdapter.ShowLi
             @Override
             public void onClick(View v)
             {
-                listner.onItemClick(showDetails);
+                listner.onShowClick(showDetails);
             }
         });
 

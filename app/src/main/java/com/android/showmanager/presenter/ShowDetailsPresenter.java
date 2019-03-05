@@ -1,9 +1,12 @@
 package com.android.showmanager.presenter;
 
+import java.util.List;
+
 import com.android.showmanager.contract.IShowDetailsContract;
 import com.android.showmanager.contract.IShowSearchContract;
 import com.android.showmanager.contract.OnFinishedListener;
 import com.android.showmanager.pojo.ShowDetails;
+import com.android.showmanager.pojo.ShowSearchDetails;
 
 public class ShowDetailsPresenter<T> implements IShowDetailsContract.IShowDetailsPresenter, OnFinishedListener<T>
 {
@@ -55,5 +58,11 @@ public class ShowDetailsPresenter<T> implements IShowDetailsContract.IShowDetail
     public void onInternetNotConnected()
     {
 
+    }
+
+    @Override
+    public void onBookMarkLoaded(List<ShowSearchDetails> showSearchDetailsList)
+    {
+      //DO Nothing
     }
 }

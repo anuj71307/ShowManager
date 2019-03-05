@@ -19,16 +19,27 @@ public class ShowSearchDetails
     private String year;
     @SerializedName("imdbID")
     private String imdbID;
+    @Ignore
     @SerializedName("Type")
     private String type;
     @SerializedName("Poster")
     private String poster;
+    @Ignore
     @SerializedName("totalResults")
     private String totalResults;
 
     @Ignore
     public ShowSearchDetails()
     {
+    }
+
+    public ShowSearchDetails(int _id, String title, String year, String imdbID, String poster)
+    {
+        this._id = _id;
+        this.title = title;
+        this.year = year;
+        this.imdbID = imdbID;
+        this.poster = poster;
     }
 
     public ShowSearchDetails(String title, String year, String imdbID, String type, String poster, String totalResults)

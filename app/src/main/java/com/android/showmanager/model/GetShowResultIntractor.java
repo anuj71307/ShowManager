@@ -1,9 +1,13 @@
-package com.android.showmanager.rest;
+package com.android.showmanager.model;
+
+import java.util.List;
 
 import com.android.showmanager.contract.IShowSearchContract;
 import com.android.showmanager.contract.OnFinishedListener;
 import com.android.showmanager.pojo.ShowDetails;
+import com.android.showmanager.pojo.ShowSearchDetails;
 import com.android.showmanager.pojo.ShowSearchResponse;
+import com.android.showmanager.task.BookMarkTask;
 import com.android.showmanager.utils.Constants;
 
 import android.util.Log;
@@ -64,5 +68,10 @@ public class GetShowResultIntractor implements IShowSearchContract.IGetShowResul
 
     }
 
+    @Override
+    public void loadBookMarkData(OnFinishedListener onFinishedListener)
+    {
+        new BookMarkTask(onFinishedListener).execute();
+    }
 
 }

@@ -22,11 +22,13 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.BookMa
 {
     List<ShowSearchDetails> showList;
     private Context context;
+    IShowClickListner listner;
 
-    public BookMarkAdapter(Context context)
+    public BookMarkAdapter(Context context, IShowClickListner listner)
     {
         this.showList = new ArrayList<>();
         this.context = context;
+        this.listner = listner;
     }
 
     public List<ShowSearchDetails> getShowList()
@@ -52,10 +54,10 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.BookMa
     @Override
     public void onBindViewHolder(@NonNull BookMarkViewHolder holder, int position)
     {
-        ShowSearchDetails showDetail = showList.get(position);
-        holder.showName.setText(showDetail.getTitle());
+        final ShowSearchDetails showDetails = showList.get(position);
+        holder.showName.setText(showDetails.getTitle());
         Picasso.with(context)
-            .load(showDetail.getPoster())
+            .load(showDetails.getPoster())
             .placeholder(R.drawable.placeholder_background)
             .error(R.drawable.placeholder_background)
             .fit()
@@ -74,6 +76,15 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.BookMa
                     //TODO Anuj
                 }
             });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                listner.onShowClick(showDetails);
+            }
+        });
     }
 
     @Override

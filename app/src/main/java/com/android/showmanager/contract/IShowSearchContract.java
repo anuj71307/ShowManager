@@ -11,7 +11,6 @@ public interface IShowSearchContract
         void searchByTitle(String title, int page);
         void onDestroy();
         void saveBookMark(ShowSearchDetails showDetails);
-
         void loadBookMark();
     }
 
@@ -22,6 +21,8 @@ public interface IShowSearchContract
        void loadSearchResult(List<ShowSearchDetails> showDetailsList);
        void showEmptyErrorTitle();
        void showResponseFailure();
+       void showToastMessage(String message);
+       void onBookMarkLoaded(List<ShowSearchDetails> showSearchDetailsList);
     }
 
     /**
@@ -32,5 +33,6 @@ public interface IShowSearchContract
 
         void getSearchResult(String title, int page, OnFinishedListener onFinishedListener);
         void getShowDetails(String imdbId, OnFinishedListener onFinishedListener);
+        void loadBookMarkData(OnFinishedListener onFinishedListener);
     }
 }

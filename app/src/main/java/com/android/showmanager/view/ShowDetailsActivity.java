@@ -4,7 +4,7 @@ import com.android.showmanager.R;
 import com.android.showmanager.contract.IShowDetailsContract;
 import com.android.showmanager.pojo.ShowDetails;
 import com.android.showmanager.presenter.ShowDetailsPresenter;
-import com.android.showmanager.rest.GetShowResultIntractor;
+import com.android.showmanager.model.GetShowResultIntractor;
 import com.android.showmanager.utils.Constants;
 import com.squareup.picasso.Picasso;
 

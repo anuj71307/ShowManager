@@ -28,14 +28,17 @@ public class BookmarkRepository
     /**
      * insert data in bookmark table
      */
-    public void insertBookMark(ShowSearchDetails showSearchDetails)
+    public boolean insertBookMark(ShowSearchDetails showSearchDetails)
     {
+        boolean result = true;
         try {
             bookMarkDatabase.daoAccess().insertBookmark(showSearchDetails);
         }
         catch (Exception e){
+            result = false;
             Log.i(TAG, "Exception while inserting bookmark " + e);
         }
+        return result;
     }
 
     /**

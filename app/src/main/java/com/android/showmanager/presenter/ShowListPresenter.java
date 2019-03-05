@@ -1,5 +1,7 @@
 package com.android.showmanager.presenter;
 
+import java.util.List;
+
 import com.android.showmanager.MyApplication;
 import com.android.showmanager.contract.IShowSearchContract;
 import com.android.showmanager.contract.OnFinishedListener;
@@ -54,20 +56,36 @@ public class ShowListPresenter<T> implements IShowSearchContract.ShowSearchPrese
     {
         //save bookmark in db
         BookmarkRepository repository = MyApplication.getMyApplicationContext().getBookMarkRepository();
-        repository.insertBookMark(showDetails);
+        boolean result = repository.insertBookMark(showDetails);
+        if (view != null) {
+            if (result) {
+                view.showToastMessage("Bookmark saved");
+                loadBookMark();
+            }
+            else {
+                view.showToastMessage("Bookmark not saved");
+            }
+        }
 
     }
 
     @Override
     public void loadBookMark()
     {
-      //TODO Load Bookmark
+        if (view == null) {
+            return;
+        }
+        view.showToastMessage("Loading Bookmark..");
+        iGetShowResultIntractor.loadBookMarkData(this);
     }
 
     @Override
     public void onFinished(T object)
     {
-        if(view==null || !(object instanceof ShowSearchResponse)) return;;
+        if (view == null || !(object instanceof ShowSearchResponse)) {
+            return;
+        }
+        ;
         view.hideProgress();
         ShowSearchResponse response = (ShowSearchResponse) object;
         view.loadSearchResult(response.getShowDetailsList());
@@ -90,6 +108,17 @@ public class ShowListPresenter<T> implements IShowSearchContract.ShowSearchPrese
     @Override
     public void onInternetNotConnected()
     {
+       if(view!=null){
+           view.showToastMessage("Please connect to internet");
+       }
+    }
 
+    @Override
+    public void onBookMarkLoaded(List<ShowSearchDetails> showSearchDetailsList)
+    {
+        if (view == null) {
+            return;
+        }
+        view.onBookMarkLoaded(showSearchDetailsList);
     }
 }

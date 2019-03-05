@@ -9,6 +9,7 @@
         android:id="@+id/searchParam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_left_small"
         android:ems="10"
         android:inputType="textNoSuggestions" />
 
@@ -52,8 +53,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/showListRecylerView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_left_small"
         android:layout_below="@id/bookmarkLayout"
         android:clipToPadding="false"
         android:overScrollMode="ifContentScrolls" />

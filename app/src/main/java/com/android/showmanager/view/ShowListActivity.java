@@ -5,13 +5,12 @@ import java.util.List;
 
 import com.android.showmanager.R;
 import com.android.showmanager.adapter.BookMarkAdapter;
-import com.android.showmanager.adapter.ItemClickListner;
+import com.android.showmanager.adapter.IShowClickListner;
 import com.android.showmanager.adapter.ShowListAdapter;
 import com.android.showmanager.contract.IShowSearchContract;
 import com.android.showmanager.pojo.ShowSearchDetails;
 import com.android.showmanager.presenter.ShowListPresenter;
-import com.android.showmanager.rest.GetShowResultIntractor;
-import com.android.showmanager.task.BookMarkTask;
+import com.android.showmanager.model.GetShowResultIntractor;
 import com.android.showmanager.utils.Constants;
 import com.android.showmanager.utils.PaginationScrollListener;
 
@@ -32,8 +31,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ShowListActivity extends AppCompatActivity implements IShowSearchContract.IShowSearchView,
-    BookMarkTask.onTaskExecuted
+public class ShowListActivity extends AppCompatActivity implements IShowSearchContract.IShowSearchView
 {
 
     private static final String TAG = ShowListActivity.class.getSimpleName();
@@ -64,7 +62,7 @@ public class ShowListActivity extends AppCompatActivity implements IShowSearchCo
         presenter = new ShowListPresenter(this, new GetShowResultIntractor());
         initView();
         initBookMarkView();
-        initRecylerView();
+        initResultRecylerView();
         initProgressBar();
     }
 
@@ -106,15 +104,14 @@ public class ShowListActivity extends AppCompatActivity implements IShowSearchCo
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false);
         mBookmarkView.setLayoutManager(layoutManager);
-        mBookMarkAdapter = new BookMarkAdapter(this);
+        mBookMarkAdapter = new BookMarkAdapter(this, recyclerItemClickListener);
         mBookmarkView.setAdapter(mBookMarkAdapter);
         mBookmarkView.setItemAnimator(new DefaultItemAnimator());
         mBookMarkLinearLayout = findViewById(R.id.bookmarkLayout);
         presenter.loadBookMark();
         //TODO Move to presenter
-        new BookMarkTask(this).execute();
     }
-    private void initRecylerView()
+    private void initResultRecylerView()
     {
         mRecyclerView = findViewById(R.id.showListRecylerView);
         mRecyclerView.setHasFixedSize(true);
@@ -209,14 +206,19 @@ public class ShowListActivity extends AppCompatActivity implements IShowSearchCo
     public void showEmptyErrorTitle()
     {
         Log.i(TAG, "load search result");
-        Toast.makeText(this, "Empty title", Toast.LENGTH_SHORT).show();
+        showToastMessage("Empty title");
     }
 
     @Override
     public void showResponseFailure()
     {
         Log.i(TAG, "load search result");
-        Toast.makeText(this, "Response error", Toast.LENGTH_SHORT).show();
+        showToastMessage("Response error");
+    }
+
+    @Override
+    public void showToastMessage(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -229,10 +231,10 @@ public class ShowListActivity extends AppCompatActivity implements IShowSearchCo
     /**
      * RecyclerItem click event listener
      */
-    private ItemClickListner recyclerItemClickListener = new ItemClickListner()
+    private IShowClickListner recyclerItemClickListener = new IShowClickListner()
     {
         @Override
-        public void onItemClick(ShowSearchDetails showSearchDetails)
+        public void onShowClick(ShowSearchDetails showSearchDetails)
         {
 
             Log.i(TAG, "Show clicked " + showSearchDetails.getTitle());
@@ -244,10 +246,14 @@ public class ShowListActivity extends AppCompatActivity implements IShowSearchCo
         public void onSaveBookMark(ShowSearchDetails showDetails)
         {
             Log.i(TAG, "Save book Mark for " + showDetails.getTitle());
-            presenter.saveBookMark(showDetails);
+             presenter.saveBookMark(showDetails);
         }
     };
 
+    /**
+     * Start Detai Activity
+     * @param imdbID
+     */
     private void startDetailActivity(String imdbID)
     {
         Intent intent = new Intent(this, ShowDetailsActivity.class);

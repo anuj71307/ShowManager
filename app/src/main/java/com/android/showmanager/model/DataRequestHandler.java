@@ -1,4 +1,4 @@
-package com.android.showmanager.rest;
+package com.android.showmanager.model;
 
 import com.android.showmanager.utils.Constants;
 
