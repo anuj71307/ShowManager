@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
+    android:id="@+id/relativeLayout"
     android:orientation="vertical">
 
 
@@ -65,9 +66,10 @@
 
     <ImageButton
         android:id="@+id/bookmarkButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_margin="@dimen/activity_margin_half"
         android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/cardView"
         android:background="@drawable/outline_bookmarks_black_48"/>
 </RelativeLayout>
