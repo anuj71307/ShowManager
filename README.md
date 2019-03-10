@@ -15,6 +15,8 @@ User can bookmark a movie. The bookmarked movie should be identified (may be a b
 The bookmarked list will be a horizontal scrolling list at the top which will contain image and name.
 The normal list will be vertical scrolling list which will contain the details given above. 
 
-Design Pattern: MVP
-Libarary for network call: Retrofit
+Design Pattern: MVP, 
+
+Libarary for network call: Retrofit, 
+
 Library for image download: Picasso
