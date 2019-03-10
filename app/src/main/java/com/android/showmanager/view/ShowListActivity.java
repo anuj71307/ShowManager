@@ -14,10 +14,14 @@ import com.android.showmanager.model.GetShowResultIntractor;
 import com.android.showmanager.utils.Constants;
 import com.android.showmanager.utils.PaginationScrollListener;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +31,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -60,35 +65,61 @@ public class ShowListActivity extends AppCompatActivity implements IShowSearchCo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
         presenter = new ShowListPresenter(this, new GetShowResultIntractor());
-        initView();
         initBookMarkView();
         initResultRecylerView();
         initProgressBar();
+        loadDefaultSearch();
     }
 
 
-
-
-    private void initView()
+    private void loadDefaultSearch()
     {
-        searchParam = findViewById(R.id.searchParam);
-        button = findViewById(R.id.searchButton);
-        searchParam = findViewById(R.id.searchParam);
-        button.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                searchKey = searchParam.getText().toString();
-                searchKeyChanged = true;
-                currentPage = Constants.PAGE_START;
-                searchByTitle(searchKey, currentPage);
-
-            }
-        });
+        searchKeyChanged = true;
+        searchKey = Constants.DEFAULT_SEARCH;
+        searchByTitle(searchKey, currentPage);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+
+            SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+            SearchView search = (SearchView) menu.findItem(R.id.action_search).getActionView();
+
+            search.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
+
+            search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+                @Override
+                public boolean onQueryTextSubmit(String query)
+                {
+                    Log.i(TAG, "Text Submitted " + query);
+                    searchKeyChanged = true;
+                    currentPage = Constants.PAGE_START;
+                    searchKey = query;
+                    searchByTitle(searchKey, currentPage);
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String query) {
+
+                    // DO Nothing
+                    return true;
+
+                }
+
+            });
+
+        }
+
+        return true;
+
+    }
     private void searchByTitle(String title, int pages)
     {
         //TODO Anuj add loading ui in adapter and remove toast
