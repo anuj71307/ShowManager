@@ -6,6 +6,7 @@ On Click of the card user redirected to details page where app  show the followi
 Name, Year, Genre, Director, image, IMDB rating, Actors.
 
 API Detais can be found at: http://www.omdbapi.com/
+Generate your own key from OMDB and mention it in https://github.com/anuj71307/ShowManager/edit/master/app/src/main/java/com/android/showmanager/utils/Constants.java file, for variable API_KEY
  
 There is a search option in action bar for the user to search a movie/show.
 Use the pagination feature of the api to get next results.
