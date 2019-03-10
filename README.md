@@ -1,5 +1,5 @@
-# ShowManager
-Movie/Show Manager using omdb apis 
+# ShowManager - Movie/Show Manager using omdb apis 
+
 Developing an Android app to show a list of movies and tv shows to the user. The movie/show card contain the following details.
 Name, Year, image.
 On Click of the card user redirected to details page where app  show the following details and an option to return back to the main screen.
