@@ -6,4 +6,7 @@
     <string name="dummyName">Movie Name</string>
     <string name="bookmark">Bookmarks</string>
     <string name="search_show">Enter show name to search</string>
+    <string name="dialog_details">Do you want to delete this bookmark?</string>
+    <string name="YES">Yes</string>
+    <string name="NO">No</string>
 </resources>

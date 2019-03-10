@@ -283,6 +283,10 @@ public class ShowListActivity extends AppCompatActivity implements IShowSearchCo
             Log.i(TAG, "Save book Mark for " + showDetails.getTitle());
              presenter.saveBookMark(showDetails);
         }
+
+        public void onDeleteBookMark(ShowSearchDetails showDetails){
+             presenter.deleteBookMark(showDetails);
+        }
     };
 
     /**
@@ -302,6 +306,8 @@ public class ShowListActivity extends AppCompatActivity implements IShowSearchCo
     {
         if(result==null || result.isEmpty()){
             Log.i(TAG, "No boookmark in db");
+            mBookMarkLinearLayout.setVisibility(View.GONE);
+            mBookMarkAdapter.getShowList().clear();
             return;
         }
         mBookMarkLinearLayout.setVisibility(View.VISIBLE);

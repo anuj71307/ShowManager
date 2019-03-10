@@ -9,6 +9,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.BookMarkViewHolder>
@@ -85,6 +87,47 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.BookMa
                 listner.onShowClick(showDetails);
             }
         });
+
+        holder.itemView.setLongClickable(true);
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View v)
+            {
+                showDialog(showDetails);
+                return true;
+            }
+        });
+    }
+
+    private void showDialog(final ShowSearchDetails showDetails)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(R.string.dialog_details);
+        builder.setCancelable(true);
+
+        builder.setPositiveButton(
+            R.string.YES,
+            new DialogInterface.OnClickListener()
+            {
+                public void onClick(DialogInterface dialog, int id)
+                {
+                    listner.onDeleteBookMark(showDetails);
+                }
+            });
+
+        builder.setNegativeButton(
+            R.string.NO,
+            new DialogInterface.OnClickListener()
+            {
+                public void onClick(DialogInterface dialog, int id)
+                {
+                    dialog.cancel();
+                }
+            });
+
+        AlertDialog alert11 = builder.create();
+        alert11.show();
     }
 
     @Override

@@ -44,9 +44,17 @@ public class BookmarkRepository
     /**
      * delete data from bookmark db
      */
-    public void deleteBookMark(ShowSearchDetails showSearchDetails)
+    public boolean deleteBookMark(ShowSearchDetails showSearchDetails)
     {
-        bookMarkDatabase.daoAccess().deleteBookmark(showSearchDetails);
+        boolean result = true;
+        try {
+            bookMarkDatabase.daoAccess().deleteBookmark(showSearchDetails);
+        }
+        catch (Exception e) {
+            result = false;
+            Log.i(TAG, "Exception while inserting bookmark " + e);
+        }
+        return result;
     }
 
 

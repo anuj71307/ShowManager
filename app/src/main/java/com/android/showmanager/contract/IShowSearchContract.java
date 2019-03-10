@@ -12,6 +12,7 @@ public interface IShowSearchContract
         void onDestroy();
         void saveBookMark(ShowSearchDetails showDetails);
         void loadBookMark();
+        void deleteBookMark(ShowSearchDetails showDetails);
     }
 
     interface IShowSearchView

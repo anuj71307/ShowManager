@@ -80,6 +80,23 @@ public class ShowListPresenter<T> implements IShowSearchContract.ShowSearchPrese
     }
 
     @Override
+    public void deleteBookMark(ShowSearchDetails showDetails)
+    {
+        BookmarkRepository repository = MyApplication.getMyApplicationContext().getBookMarkRepository();
+        boolean result = repository.deleteBookMark(showDetails);
+        if (view != null) {
+            if (result) {
+                view.showToastMessage("Bookmark deleted");
+                loadBookMark();
+            }
+            else {
+                view.showToastMessage("Bookmark not deleted");
+            }
+        }
+
+    }
+
+    @Override
     public void onFinished(T object)
     {
         if (view == null || !(object instanceof ShowSearchResponse)) {
