@@ -16,5 +16,6 @@ public interface IShowDetailsContract
         void hideProgress();
         void loadSearchResult(ShowDetails showDetails);
         void showResponseFailure();
+        void showToastMessage(String msg);
     }
 }

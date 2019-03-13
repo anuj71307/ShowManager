@@ -5,6 +5,7 @@ import java.util.List;
 import com.android.showmanager.MyApplication;
 import com.android.showmanager.contract.IShowSearchContract;
 import com.android.showmanager.contract.OnFinishedListener;
+import com.android.showmanager.model.GetShowResultIntractor;
 import com.android.showmanager.pojo.ShowSearchDetails;
 import com.android.showmanager.pojo.ShowSearchResponse;
 import com.android.showmanager.dao.BookmarkRepository;
@@ -19,11 +20,10 @@ public class ShowListPresenter<T> implements IShowSearchContract.ShowSearchPrese
     private IShowSearchContract.IShowSearchView view;
     private IShowSearchContract.IGetShowResultIntractor iGetShowResultIntractor;
 
-    public ShowListPresenter(IShowSearchContract.IShowSearchView view,
-        IShowSearchContract.IGetShowResultIntractor iGetShowResultIntractor)
+    public ShowListPresenter(IShowSearchContract.IShowSearchView view)
     {
         this.view = view;
-        this.iGetShowResultIntractor = iGetShowResultIntractor;
+        this.iGetShowResultIntractor = new GetShowResultIntractor();
     }
 
     @Override
@@ -102,7 +102,7 @@ public class ShowListPresenter<T> implements IShowSearchContract.ShowSearchPrese
         if (view == null || !(object instanceof ShowSearchResponse)) {
             return;
         }
-        ;
+
         view.hideProgress();
         ShowSearchResponse response = (ShowSearchResponse) object;
         view.loadSearchResult(response.getShowDetailsList());
@@ -126,7 +126,8 @@ public class ShowListPresenter<T> implements IShowSearchContract.ShowSearchPrese
     public void onInternetNotConnected()
     {
        if(view!=null){
-           view.showToastMessage("Please connect to internet");
+           view.hideProgress();
+           view.showToastMessage("Please check your connectivity");
        }
     }
 

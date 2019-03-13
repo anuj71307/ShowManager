@@ -5,6 +5,7 @@ import java.util.List;
 import com.android.showmanager.contract.IShowDetailsContract;
 import com.android.showmanager.contract.IShowSearchContract;
 import com.android.showmanager.contract.OnFinishedListener;
+import com.android.showmanager.model.GetShowResultIntractor;
 import com.android.showmanager.pojo.ShowDetails;
 import com.android.showmanager.pojo.ShowSearchDetails;
 
@@ -13,11 +14,10 @@ public class ShowDetailsPresenter<T> implements IShowDetailsContract.IShowDetail
     IShowDetailsContract.IShowDetailsView view;
     IShowSearchContract.IGetShowResultIntractor showResultIntractor;
 
-    public ShowDetailsPresenter(IShowDetailsContract.IShowDetailsView view,
-        IShowSearchContract.IGetShowResultIntractor showResultIntractor)
+    public ShowDetailsPresenter(IShowDetailsContract.IShowDetailsView view)
     {
         this.view = view;
-        this.showResultIntractor = showResultIntractor;
+        this.showResultIntractor = new GetShowResultIntractor();
     }
 
     @Override
@@ -50,19 +50,24 @@ public class ShowDetailsPresenter<T> implements IShowDetailsContract.IShowDetail
     @Override
     public void onFailure()
     {
-      if(view==null) return;
-      view.showResponseFailure();
+        if (view == null) {
+            return;
+        }
+        view.showResponseFailure();
     }
 
     @Override
     public void onInternetNotConnected()
     {
-
+        if (view != null) {
+            view.hideProgress();
+            view.showToastMessage("Please check your connectivity");
+        }
     }
 
     @Override
     public void onBookMarkLoaded(List<ShowSearchDetails> showSearchDetailsList)
     {
-      //DO Nothing
+        //DO Nothing
     }
 }

@@ -64,7 +64,7 @@ public class ShowListActivity extends AppCompatActivity implements IShowSearchCo
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
-        presenter = new ShowListPresenter(this, new GetShowResultIntractor());
+        presenter = new ShowListPresenter(this);
         initBookMarkView();
         initResultRecylerView();
         initProgressBar();

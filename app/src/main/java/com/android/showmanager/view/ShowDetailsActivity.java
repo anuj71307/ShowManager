@@ -43,7 +43,7 @@ public class ShowDetailsActivity extends AppCompatActivity implements IShowDetai
         setContentView(R.layout.show_details_layout);
         initView();
         initProgressBar();
-        presenter = new ShowDetailsPresenter<ShowDetails>(this, new GetShowResultIntractor());
+        presenter = new ShowDetailsPresenter<ShowDetails>(this);
         imdbId = getIntent().getExtras().getString(Constants.IMDB_ID);
         presenter.loadShowDetails(imdbId);
 
@@ -127,6 +127,12 @@ public class ShowDetailsActivity extends AppCompatActivity implements IShowDetai
     public void showResponseFailure()
     {
         Toast.makeText(this, "Failed to load details", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showToastMessage(String msg)
+    {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
