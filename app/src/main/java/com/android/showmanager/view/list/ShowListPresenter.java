@@ -12,7 +12,7 @@ import com.android.showmanager.dao.BookmarkRepository;
 import android.text.TextUtils;
 
 /**
- * Presenter class responsible to interact with view
+ * Presenter class responsible to interact with list view of results
  */
 public class ShowListPresenter<T> implements IShowSearchContract.ShowSearchPresenter, OnFinishedListener<T>
 {
