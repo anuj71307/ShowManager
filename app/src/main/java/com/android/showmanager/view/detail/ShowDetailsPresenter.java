@@ -8,6 +8,10 @@ import com.android.showmanager.network.GetShowResultIntractor;
 import com.android.showmanager.pojo.ShowDetails;
 import com.android.showmanager.pojo.ShowSearchDetails;
 
+/**
+ * Details presenter class
+ * @param <T>
+ */
 public class ShowDetailsPresenter<T> implements IShowDetailsContract.IShowDetailsPresenter, OnFinishedListener<T>
 {
     IShowDetailsContract.IShowDetailsView view;
