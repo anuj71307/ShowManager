@@ -1,10 +1,6 @@
-package com.android.showmanager.model;
+package com.android.showmanager.network;
 
 import com.android.showmanager.utils.Constants;
-
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -12,14 +8,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DataRequestHandler
 {
     Retrofit retrofit;
-    private volatile static DataRequestHandler instance;
 
-    public DataRequestHandler()
-    {
-
-    }
-
-
+    /**
+     * return retrofit instance
+     * @return
+     */
     public Retrofit getRetroFitInstance()
     {
 

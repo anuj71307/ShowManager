@@ -1,11 +1,10 @@
-package com.android.showmanager.presenter;
+package com.android.showmanager.view.detail;
 
 import java.util.List;
 
-import com.android.showmanager.contract.IShowDetailsContract;
-import com.android.showmanager.contract.IShowSearchContract;
-import com.android.showmanager.contract.OnFinishedListener;
-import com.android.showmanager.model.GetShowResultIntractor;
+import com.android.showmanager.view.list.IShowSearchContract;
+import com.android.showmanager.view.OnFinishedListener;
+import com.android.showmanager.network.GetShowResultIntractor;
 import com.android.showmanager.pojo.ShowDetails;
 import com.android.showmanager.pojo.ShowSearchDetails;
 

@@ -1,7 +1,8 @@
-package com.android.showmanager.contract;
+package com.android.showmanager.view.list;
 
 import java.util.List;
 
+import com.android.showmanager.view.OnFinishedListener;
 import com.android.showmanager.pojo.ShowSearchDetails;
 
 public interface IShowSearchContract

@@ -5,19 +5,21 @@ import android.util.Log;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * Class which get page scroll call back
+ *
+ */
 public abstract class PaginationScrollListener extends RecyclerView.OnScrollListener
 {
     private static final String TAG = PaginationScrollListener.class.getSimpleName();
     private LinearLayoutManager layoutManager;
-    /**
-     * Supporting only LinearLayoutManager for now.
-     *
-     * @param layoutManager
-     */
     protected PaginationScrollListener(LinearLayoutManager layoutManager) {
         this.layoutManager = layoutManager;
     }
 
+    /*
+     Methd gets callback when user scroll the search list
+     */
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);

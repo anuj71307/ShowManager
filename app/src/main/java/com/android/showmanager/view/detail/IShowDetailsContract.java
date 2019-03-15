@@ -1,4 +1,4 @@
-package com.android.showmanager.contract;
+package com.android.showmanager.view.detail;
 
 import java.util.List;
 

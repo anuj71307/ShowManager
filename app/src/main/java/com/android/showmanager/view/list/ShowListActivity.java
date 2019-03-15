@@ -1,4 +1,4 @@
-package com.android.showmanager.view;
+package com.android.showmanager.view.list;
 
 
 import java.util.List;
@@ -7,12 +7,10 @@ import com.android.showmanager.R;
 import com.android.showmanager.adapter.BookMarkAdapter;
 import com.android.showmanager.adapter.IShowClickListner;
 import com.android.showmanager.adapter.ShowListAdapter;
-import com.android.showmanager.contract.IShowSearchContract;
 import com.android.showmanager.pojo.ShowSearchDetails;
-import com.android.showmanager.presenter.ShowListPresenter;
-import com.android.showmanager.model.GetShowResultIntractor;
 import com.android.showmanager.utils.Constants;
 import com.android.showmanager.utils.PaginationScrollListener;
+import com.android.showmanager.view.detail.ShowDetailsActivity;
 
 import android.app.SearchManager;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.android.showmanager.model;
+package com.android.showmanager.network;
 
 import com.android.showmanager.pojo.ShowDetails;
 import com.android.showmanager.pojo.ShowSearchResponse;

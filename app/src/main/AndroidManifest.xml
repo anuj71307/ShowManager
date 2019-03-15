@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.ShowListActivity"
+        <activity android:name=".view.list.ShowListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.ShowDetailsActivity"
+        <activity android:name=".view.detail.ShowDetailsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
     </application>

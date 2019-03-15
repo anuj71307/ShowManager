@@ -11,7 +11,7 @@ public class Utils
      * This method take the application context and check on the internet connectivity.
      * if the device connected with the internet! the method will return true, else it will return false.
      *
-     * @param context Activity context.
+     * @param context  context.
      * @return boolean true if internet connected, false if it not connected.
      */
     public static boolean checkInternetConnection(Context context)

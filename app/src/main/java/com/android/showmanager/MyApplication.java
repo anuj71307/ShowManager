@@ -1,7 +1,7 @@
 package com.android.showmanager;
 
 import com.android.showmanager.dao.BookmarkRepository;
-import com.android.showmanager.model.DataRequestHandler;
+import com.android.showmanager.network.DataRequestHandler;
 
 import android.app.Application;
 import android.content.Context;
