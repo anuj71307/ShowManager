@@ -1,6 +1,6 @@
 package com.android.showmanager.adapter;
 
-import com.android.showmanager.pojo.ShowSearchDetails;
+import com.android.showmanager.model.ShowSearchDetails;
 
 public interface IShowClickListner
 {

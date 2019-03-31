@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.android.showmanager.R;
-import com.android.showmanager.pojo.ShowSearchDetails;
+import com.android.showmanager.model.ShowSearchDetails;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 

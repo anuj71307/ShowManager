@@ -1,27 +1,27 @@
 package com.android.showmanager.view.detail;
 
 import com.android.showmanager.R;
-import com.android.showmanager.pojo.ShowDetails;
+import com.android.showmanager.model.ShowDetails;
 import com.android.showmanager.utils.Constants;
+import com.android.showmanager.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
-public class ShowDetailsActivity extends AppCompatActivity implements IShowDetailsContract.IShowDetailsView
+public class ShowDetailsActivity extends AppCompatActivity
 {
     private static final String TAG = ShowDetailsActivity.class.getSimpleName();
-    IShowDetailsContract.IShowDetailsPresenter presenter;
     String imdbId;
     TextView director;
     TextView genre;
@@ -32,6 +32,7 @@ public class ShowDetailsActivity extends AppCompatActivity implements IShowDetai
     ImageView imageView;
     ImageButton button;
     private ProgressBar progressBar;
+    private ShowDetailViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -39,66 +40,59 @@ public class ShowDetailsActivity extends AppCompatActivity implements IShowDetai
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_details_layout);
         initView();
-        initProgressBar();
-        presenter = new ShowDetailsPresenter<ShowDetails>(this);
         imdbId = getIntent().getExtras().getString(Constants.IMDB_ID);
-        presenter.loadShowDetails(imdbId);
+        mViewModel = ViewModelProviders.of(this).get(ShowDetailViewModel.class);
+        loadShowDetails(imdbId);
 
+
+    }
+
+    void loadShowDetails(String imdbId)
+    {
+        if(!Utils.checkInternetConnection(this)){
+            showToastMessage("Check your connectivity");
+            return;
+        }
+        showProgress();
+
+        mViewModel.getShodwDetails(imdbId).observe(this, new Observer<ShowDetails>()
+        {
+            @Override
+            public void onChanged(ShowDetails showDetails)
+            {
+                initUI(showDetails);
+                hideProgress();
+            }
+        });
     }
 
     private void initView()
     {
 
+        progressBar = findViewById(R.id.progressBar);
         button = findViewById(R.id.bookmarkButton);
         button.setVisibility(View.GONE);
         director = findViewById(R.id.director);
         actors = findViewById(R.id.actors);
         imdbRating = findViewById(R.id.imdbRating);
-        genre =findViewById(R.id.genre);
+        genre = findViewById(R.id.genre);
         name = findViewById(R.id.showName);
         year = findViewById(R.id.showYear);
         imageView = findViewById(R.id.imageView);
 
     }
 
-    //showing progress bar programatically
-    private void initProgressBar()
-    {
-        //TODO Anuj Show progress bar
-        progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleLarge);
-        progressBar.setIndeterminate(true);
 
-        RelativeLayout relativeLayout = new RelativeLayout(this);
-        relativeLayout.setGravity(Gravity.CENTER);
-        relativeLayout.addView(progressBar);
-
-        RelativeLayout.LayoutParams params = new
-            RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-            RelativeLayout.LayoutParams.MATCH_PARENT);
-        progressBar.setVisibility(View.INVISIBLE);
-        addContentView(relativeLayout, params);
-    }
-
-
-
-    @Override
     public void showProgress()
     {
         Log.i(TAG, "Showing progress");
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    @Override
     public void hideProgress()
     {
         Log.i(TAG, "hiding progress");
-        progressBar.setVisibility(View.INVISIBLE);
-    }
-
-    @Override
-    public void loadSearchResult(ShowDetails showDetails)
-    {
-        initUI(showDetails);
+        progressBar.setVisibility(View.GONE);
     }
 
     private void initUI(final ShowDetails showDetails)
@@ -106,10 +100,10 @@ public class ShowDetailsActivity extends AppCompatActivity implements IShowDetai
         name.setText(showDetails.getTitle());
         year.setText(showDetails.getYear());
         //TODO Remove hardcoded Strings
-        director.setText("Director: "+showDetails.getDirector());
-        actors.setText("Actors: "+showDetails.getActors());
-        imdbRating.setText("IMDB Rating: "+showDetails.getImdbRating());
-        genre.setText("Genre: "+showDetails.getGenre());
+        director.setText("Director: " + showDetails.getDirector());
+        actors.setText("Actors: " + showDetails.getActors());
+        imdbRating.setText("IMDB Rating: " + showDetails.getImdbRating());
+        genre.setText("Genre: " + showDetails.getGenre());
 
         Picasso.with(this)
             .load(showDetails.getPoster())
@@ -120,13 +114,7 @@ public class ShowDetailsActivity extends AppCompatActivity implements IShowDetai
             .into(imageView);
     }
 
-    @Override
-    public void showResponseFailure()
-    {
-        Toast.makeText(this, "Failed to load details", Toast.LENGTH_SHORT).show();
-    }
 
-    @Override
     public void showToastMessage(String msg)
     {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
@@ -135,7 +123,6 @@ public class ShowDetailsActivity extends AppCompatActivity implements IShowDetai
     @Override
     public void onDestroy()
     {
-        presenter.onDestroy();
         super.onDestroy();
     }
 

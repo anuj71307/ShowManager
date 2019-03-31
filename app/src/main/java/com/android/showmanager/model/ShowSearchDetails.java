@@ -1,4 +1,4 @@
-package com.android.showmanager.pojo;
+package com.android.showmanager.model;
 
 import com.google.gson.annotations.SerializedName;
 
