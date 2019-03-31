@@ -1,17 +1,17 @@
-package com.android.showmanager.pojo;
+package com.android.showmanager.model;
 
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ShowSearchResponse
+public class SearchResponse
 {
     @SerializedName("Search")
     List<ShowSearchDetails> showDetailsList;
     @SerializedName("totalResults")
     String totalResult;
 
-    public ShowSearchResponse(List<ShowSearchDetails> showDetailsList, String totalResult)
+    public SearchResponse(List<ShowSearchDetails> showDetailsList, String totalResult)
     {
         this.showDetailsList = showDetailsList;
         this.totalResult = totalResult;

@@ -1,8 +1,8 @@
-package com.android.showmanager.dao;
+package com.android.showmanager.db;
 
 import java.util.List;
 
-import com.android.showmanager.pojo.ShowSearchDetails;
+import com.android.showmanager.model.ShowSearchDetails;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -17,7 +17,7 @@ public interface BookmarkDao
     void insertBookmark(ShowSearchDetails bookMark);
 
     @Query("SELECT * FROM bookmarkdata order by _id desc")
-    List<ShowSearchDetails> getAllBookMarks();
+    LiveData<List<ShowSearchDetails>> getAllBookMarks();
 
     @Delete
     void deleteBookmark(ShowSearchDetails bookMark);

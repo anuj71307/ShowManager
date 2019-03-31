@@ -1,10 +1,9 @@
 package com.android.showmanager.adapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.android.showmanager.R;
-import com.android.showmanager.pojo.ShowSearchDetails;
+import com.android.showmanager.model.ShowSearchDetails;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -18,36 +17,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ShowListAdapter extends RecyclerView.Adapter<ShowListAdapter.ShowListViewHolder>
+public class ShowListAdapter extends PagedListAdapter<ShowSearchDetails, ShowListAdapter.ShowListViewHolder>
 {
 
     private static final String TAG = ShowListAdapter.class.getSimpleName();
     // View Types
-    List<ShowSearchDetails> showDetailsList;
-    IShowClickListner listner;
-    private Context context;
+    IShowClickListner mListner;
+    private Context mContext;
 
-    public ShowListAdapter(Context context, IShowClickListner listner)
+    public ShowListAdapter(Context mContext, IShowClickListner listner)
     {
-        this.showDetailsList = new ArrayList<>();
-        this.listner = listner;
-        this.context = context;
-    }
-
-    public void setShowDetailsList(List<ShowSearchDetails> showDetailsList)
-    {
-        this.showDetailsList.addAll(showDetailsList);
+        super(DIFF_CALLBACK);
+        mListner = listner;
+        this.mContext = mContext;
     }
 
-    public void clearList(){
-        this.showDetailsList.clear();
-    }
-    public List<ShowSearchDetails> getShowDetailsList()
-    {
-        return showDetailsList;
-    }
 
     @NonNull
     @Override
@@ -64,57 +52,24 @@ public class ShowListAdapter extends RecyclerView.Adapter<ShowListAdapter.ShowLi
     @Override
     public void onBindViewHolder(@NonNull ShowListViewHolder holder, int position)
     {
-        final ShowSearchDetails showDetails = showDetailsList.get(position);
-        holder.showYearView.setText(showDetails.getYear());
-        holder.showNameView.setText(showDetails.getTitle());
-        //TODO Anuj scroll progress bar
-        Picasso.with(context)
-            .load(showDetails.getPoster())
-            .placeholder(R.drawable.placeholder_background)
-            .error(R.drawable.placeholder_background)
-            .fit()
-            .noFade()
-            .into(holder.imageView, new Callback()
-            {
-                @Override
-                public void onSuccess()
-                {
-                    //TODO Anuj
-                }
-
-                @Override
-                public void onError()
-                {
-                    //TODO Anuj
-                }
-            });
-
-        holder.itemView.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                listner.onShowClick(showDetails);
-            }
-        });
-
-        holder.button.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                listner.onSaveBookMark(showDetails);
-            }
-        });
-
+        holder.bind(getItem(position));
     }
 
-    @Override
-    public int getItemCount()
-    {
-        Log.i(TAG, "showDetails count " + showDetailsList.size());
-        return showDetailsList != null ? showDetailsList.size() : 0;
-    }
+    private static DiffUtil.ItemCallback<ShowSearchDetails> DIFF_CALLBACK =
+        new DiffUtil.ItemCallback<ShowSearchDetails>()
+        {
+            @Override
+            public boolean areItemsTheSame(ShowSearchDetails oldItem, ShowSearchDetails newItem)
+            {
+                return oldItem.getImdbID() == newItem.getImdbID();
+            }
+
+            @Override
+            public boolean areContentsTheSame(ShowSearchDetails oldItem, ShowSearchDetails newItem)
+            {
+                return oldItem.equals(newItem);
+            }
+        };
 
 
     class ShowListViewHolder extends RecyclerView.ViewHolder
@@ -131,6 +86,52 @@ public class ShowListAdapter extends RecyclerView.Adapter<ShowListAdapter.ShowLi
             showNameView = itemView.findViewById(R.id.showName);
             showYearView = itemView.findViewById(R.id.showYear);
             button = itemView.findViewById(R.id.bookmarkButton);
+        }
+
+        void bind(final ShowSearchDetails showDetails)
+        {
+            showYearView.setText(showDetails.getYear());
+            showNameView.setText(showDetails.getTitle());
+            Picasso.with(mContext)
+                .load(showDetails.getPoster())
+                .placeholder(R.drawable.placeholder_background)
+                .error(R.drawable.placeholder_background)
+                .fit()
+                .noFade()
+                .into(imageView, new Callback()
+                {
+                    @Override
+                    public void onSuccess()
+                    {
+                        //TODO Anuj
+                    }
+
+                    @Override
+                    public void onError()
+                    {
+                        //TODO Anuj
+                        Log.i(TAG, "Error while loading image");
+                    }
+                });
+
+            itemView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    mListner.onShowClick(showDetails);
+                }
+            });
+
+            button.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    mListner.onSaveBookMark(showDetails);
+                }
+            });
+
         }
     }
 
