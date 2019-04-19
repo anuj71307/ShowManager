@@ -8,9 +8,7 @@ import com.android.showmanager.R;
 import com.android.showmanager.adapter.BookMarkAdapter;
 import com.android.showmanager.adapter.IShowClickListner;
 import com.android.showmanager.adapter.ShowListAdapter;
-import com.android.showmanager.api.ShowApiService;
 import com.android.showmanager.model.ShowSearchDetails;
-import com.android.showmanager.repo.SearchDataSource;
 import com.android.showmanager.utils.Constants;
 import com.android.showmanager.utils.ThreadExecutor;
 import com.android.showmanager.view.detail.ShowDetailsActivity;
@@ -154,12 +152,6 @@ public class ShowListActivity extends AppCompatActivity
     }
 
 
-    public void showToastMessage(String message)
-    {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-
     /**
      * RecyclerItem click event listener
      */
@@ -202,6 +194,7 @@ public class ShowListActivity extends AppCompatActivity
     public void refreshData()
     {
         PagedList<ShowSearchDetails> list = mShowViewModel.searchShow(mSearchKey, mExecutor);
+        Log.i(TAG, "List size is " + (list != null ? list.size() : 0));
         mAdapter.submitList(list);
 
     }
