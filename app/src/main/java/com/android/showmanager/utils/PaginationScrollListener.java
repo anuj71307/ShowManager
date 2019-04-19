@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Class which get page scroll call back
+ * This class is not used any more.
  *
  */
 public abstract class PaginationScrollListener extends RecyclerView.OnScrollListener
@@ -27,9 +28,6 @@ public abstract class PaginationScrollListener extends RecyclerView.OnScrollList
         int visibleItemCount = layoutManager.getChildCount();
         int totalItemCount = layoutManager.getItemCount();
         int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-        Log.i(TAG, "visibleItemCount " + visibleItemCount +" totalItemCount " + totalItemCount+" "
-            + "firstVisibleItemPosition "+ firstVisibleItemPosition);
-        Log.i(TAG, "IsLoading? " + isLoading() +" isLastPage? " + isLastPage());
         if (!isLoading() && !isLastPage()) {
             if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                 && firstVisibleItemPosition >= 0) {
@@ -41,6 +39,7 @@ public abstract class PaginationScrollListener extends RecyclerView.OnScrollList
     }
     protected abstract void loadMoreItems();
 
+    //optional
     public abstract int getTotalPageCount();
 
     public abstract boolean isLastPage();
