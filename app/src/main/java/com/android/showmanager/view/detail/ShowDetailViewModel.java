@@ -19,7 +19,7 @@ public class ShowDetailViewModel extends AndroidViewModel
         mShowRepository = ShowRepository.getInstance(application);
     }
 
-    public LiveData<ShowDetails> getShodwDetails(String imdbid){
+    public LiveData<ShowDetails> getShowDetails(String imdbid){
         return  mShowRepository.getShowDetails(imdbid);
     }
 

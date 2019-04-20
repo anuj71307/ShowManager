@@ -57,7 +57,21 @@ public class ShowListActivity extends AppCompatActivity
         initResultRecylerView();
         mShowViewModel = ViewModelProviders.of(this).get(ShowViewModel.class);
         registerBookMarkObserver();
+        observe();
         loadDefaultSearch();
+    }
+
+    private void observe()
+    {
+        mShowViewModel.getmShowSearchLiveData().observe(this, new Observer<PagedList<ShowSearchDetails>>()
+        {
+            @Override
+            public void onChanged(PagedList<ShowSearchDetails> showSearchDetails)
+            {
+                Log.i(TAG, "On Changed  list size is " + (showSearchDetails!=null?showSearchDetails.size():0));
+                mAdapter.submitList(showSearchDetails);
+            }
+        });
     }
 
     private void registerBookMarkObserver()
@@ -193,9 +207,8 @@ public class ShowListActivity extends AppCompatActivity
 
     public void refreshData()
     {
-        PagedList<ShowSearchDetails> list = mShowViewModel.searchShow(mSearchKey, mExecutor);
-        Log.i(TAG, "List size is " + (list != null ? list.size() : 0));
-        mAdapter.submitList(list);
+        Log.i(TAG, "Search key is "+mSearchKey);
+        mShowViewModel.searchShow(mSearchKey, mExecutor);
 
     }
 

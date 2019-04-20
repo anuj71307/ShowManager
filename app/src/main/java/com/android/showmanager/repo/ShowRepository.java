@@ -11,6 +11,7 @@ import com.android.showmanager.model.SearchResponse;
 import com.android.showmanager.utils.Constants;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -30,18 +31,20 @@ public class ShowRepository
     private BookMarkDatabase bookMarkDatabase;
     LiveData<List<ShowSearchDetails>> showDetailList;
     private volatile static ShowRepository instance;
+    private ShowApiService mService;
 
 
-    private ShowRepository(Application application)
+    private ShowRepository(Context application)
     {
         bookMarkDatabase = Room.databaseBuilder(application, BookMarkDatabase.class,
             DB_NAME).allowMainThreadQueries()
             .fallbackToDestructiveMigration()
             .build();
+        mService = ShowApiService.getInstance();
         showDetailList = getAllBookMark();
     }
 
-    public static ShowRepository getInstance(Application application)
+    public static ShowRepository getInstance(Context application)
     {
         if (instance == null) {
             synchronized (ShowRepository.class) {
@@ -103,28 +106,9 @@ public class ShowRepository
      * @param key  key to search
      * @param page page to get in result // by default 10 results are received in one call
      */
-    public LiveData<SearchResponse> getSearchResult(String key, int page)
+    public Call<SearchResponse> getSearchResult(String key, int page)
     {
-        final MutableLiveData<SearchResponse> data = new MutableLiveData<>();
-        ShowApi showApi = ShowApiService.getInstance().getApi();
-        Call<SearchResponse> call = showApi.getSearchResults(key, page, Constants.API_KEY);
-        call.enqueue(new Callback<SearchResponse>()
-        {
-            @Override
-            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response)
-            {
-                data.setValue(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<SearchResponse> call, Throwable t)
-
-            {
-                Log.e(TAG, t.toString());
-                data.setValue(null);
-            }
-        });
-        return data;
+        return mService.getApi().getSearchResults(key, page, Constants.API_KEY);
     }
 
     /**
