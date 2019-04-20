@@ -55,7 +55,7 @@ public class ShowDetailsActivity extends AppCompatActivity
         }
         showProgress();
 
-        mViewModel.getShodwDetails(imdbId).observe(this, new Observer<ShowDetails>()
+        mViewModel.getShowDetails(imdbId).observe(this, new Observer<ShowDetails>()
         {
             @Override
             public void onChanged(ShowDetails showDetails)

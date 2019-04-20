@@ -1,9 +1,9 @@
 package com.android.showmanager.repo;
 
-import com.android.showmanager.api.ShowApiService;
 import com.android.showmanager.model.SearchResponse;
 import com.android.showmanager.model.ShowSearchDetails;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -14,21 +14,21 @@ import retrofit2.Response;
 /**
  * Class Acts as data source
  */
-public class SearchDataSource extends androidx.paging.PageKeyedDataSource<Integer, ShowSearchDetails>
+public class ShowDataSource extends androidx.paging.PageKeyedDataSource<Integer, ShowSearchDetails>
 {
-    private static final String TAG = SearchDataSource.class.getSimpleName();
+    private static final String TAG = ShowDataSource.class.getSimpleName();
     //we will start from the first page which is 1
-    private static final int FIRST_PAGE = 1;
+    private static int FIRST_PAGE = 1;
 
     private String mSearchKey;
-    private ShowApiService mService;
-    private String mApiKey;
+    private Context mContext;
+    private ShowRepository mRepository;
 
-    public SearchDataSource(String searchKey, ShowApiService service, String apiKey)
+    public ShowDataSource(String searchKey, Context context)
     {
         this.mSearchKey = searchKey;
-        this.mService = service;
-        this.mApiKey = apiKey;
+        this.mContext = context;
+        mRepository = ShowRepository.getInstance(mContext);
     }
 
 
@@ -36,10 +36,9 @@ public class SearchDataSource extends androidx.paging.PageKeyedDataSource<Intege
     public void loadInitial(@NonNull LoadInitialParams<Integer> params,
         @NonNull final LoadInitialCallback<Integer, ShowSearchDetails> callback)
     {
-        Log.i(TAG, "Load initial");
+        Log.i(TAG, "Load initial " +mSearchKey +" first page " + FIRST_PAGE);
 
-        final int page = FIRST_PAGE;
-        Call<SearchResponse> call = mService.getApi().getSearchResults(mSearchKey, page, mApiKey);
+        Call<SearchResponse> call = mRepository.getSearchResult(mSearchKey, FIRST_PAGE);
         call.enqueue(new Callback<SearchResponse>()
         {
             @Override
@@ -47,7 +46,9 @@ public class SearchDataSource extends androidx.paging.PageKeyedDataSource<Intege
             {
                 Log.i(TAG, "Initial load completed");
                 if(response == null || response.body()==null) return;
-                callback.onResult(response.body().getShowDetailsList(), null, page + 1);
+                //Log.i(TAG, "response size is " + response.body().getShowDetailsList());
+                FIRST_PAGE++;
+                callback.onResult(response.body().getShowDetailsList(), null, FIRST_PAGE);
             }
 
             @Override
@@ -70,12 +71,11 @@ public class SearchDataSource extends androidx.paging.PageKeyedDataSource<Intege
     }
 
     @Override
-    public void loadAfter(@NonNull LoadParams<Integer> params,
+    public void loadAfter(@NonNull final LoadParams<Integer> params,
         @NonNull final LoadCallback<Integer, ShowSearchDetails> callback)
     {
-        Log.i(TAG, "Load After");
-        final int page = params.key;
-        Call<SearchResponse> call = mService.getApi().getSearchResults(mSearchKey, page, mApiKey);
+        Log.i(TAG, "Load After " +mSearchKey +" page "+ params.key);
+        Call<SearchResponse> call = mRepository.getSearchResult(mSearchKey, params.key);
         call.enqueue(new Callback<SearchResponse>()
         {
             @Override
@@ -83,7 +83,7 @@ public class SearchDataSource extends androidx.paging.PageKeyedDataSource<Intege
             {
                 Log.i(TAG, "After load completed");
                 if(response == null || response.body()==null) return;
-                callback.onResult(response.body().getShowDetailsList(), page + 1);
+                callback.onResult(response.body().getShowDetailsList(), params.key + 1);
             }
 
             @Override
